@@ -33,16 +33,30 @@ const getusers =  async (req, res) => {
     
   }
 
-const updateusers = async (req, res) =>{
-    let id = req.params.id
-    let userid = await user.update(req.body , { where: { id: id }})
+const getuser = async (req, res) =>{
+    const id = req.params.id;
+    let userid = await user.findOne({ where: { id: id }})
     if(!userid) res.status(404).send("not user with this id")
    
     return res.send(userid)
   
   }
 
+const updateuser = async (req,res) => {
+    let id = req.params.id;
+    let userid = await user.update(req.body , { where: { id: id }})
+    if(!userid) res.status(404).send("not user with this id")
+    return res.send(userid)
+
+}
+
+const deleteuser =  async (req, res) =>{ 
+    let id = req.params.id
+    let userid = await user.destroy({ where: { id: id }})
+    return res.send("userdeleted")
+  
+  }
 
 module.exports = {
-    createuser,getusers,updateusers
+    createuser,getusers,getuser,updateuser,deleteuser
 }
