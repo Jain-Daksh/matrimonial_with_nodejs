@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 const fs = require('fs');
@@ -33,5 +34,29 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+module.exports = db;
+*/
+
+const dbConfig = require("../config/db.config");
+
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize('testfile', 'postgres', 'root', {
+  host: dbConfig.HOST,
+  dialect: dbConfig.dialect,
+  pool: {
+    max: dbConfig.pool.max,
+    min: dbConfig.pool.min,
+    acquire: dbConfig.pool.acquire,
+    idle: dbConfig.pool.idle
+  }
+});
+
+const db = {};
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.users = require('./user')(sequelize, Sequelize);
 
 module.exports = db;

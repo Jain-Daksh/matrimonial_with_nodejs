@@ -45,9 +45,24 @@ const getuser = async (req, res) =>{
 const updateuser = async (req,res) => {
     let id = req.params.id;
     let userid = await user.update(req.body , { where: { id: id }})
-    if(!userid) res.status(404).send("not user with this id")
+   //let userid = await user.findOne({ where: { id: id }})
+   if(!userid) res.status(404).send("not user with this id")
+   
+   /*
+    const updateuser = {
+        First_name: req.body.First_name,
+        Last_name: req.body.Last_name,
+        Email: req.body.Email,
+        Date_of_birth: req.body.Date_of_birth,
+        Mobile_Number: req.body.Mobile_Number,
+        Gender: req.body.Gender,
+        Password: req.body.Password,
+        
+    }
+    user[userid] = updateuser
+    */
     return res.send(userid)
-
+   // return  res.status(200).json('Product updated')
 }
 
 const deleteuser =  async (req, res) =>{ 
